@@ -1,0 +1,236 @@
+/* Modifica HTML */
+html {
+    scroll-behavior: smooth;
+}
+
+hr{
+    color: rgb(50, 32, 27);
+
+}
+/* Contenitore generale Header */
+#contenitoreHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 30px;
+    flex-wrap: nowrap; /* Evita che gli elementi si separino su più righe */
+    width: 100%;
+    overflow: hidden; /* Assicura che gli elementi non escano dal contenitore */
+}
+
+/* Contenitore del logo */
+#contenitoreLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo */
+#logoHeader {
+    width: 230px;
+    height: auto;
+    border-radius: 100%;
+}
+
+/* Sezioni bottoni */
+.sezioneBottoni {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center; /* Centra i bottoni */
+}
+
+/* Bottone stile barretta di cioccolato */
+.button {
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff8f0;
+    background: rgb(58,32,27);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: auto; /* Rimuove la larghezza fissa */
+    max-width: 220px; /* Imposta una larghezza massima per evitare che i bottoni siano troppo grandi */
+    word-wrap: break-word; /* Forza il testo a andare a capo */
+    text-align: center; /* Allinea il testo al centro */
+    white-space: normal; /* Assicura che il testo possa andare a capo */
+}
+
+/* Hover ed Active */
+.button:hover {
+    background: #7b3f0f;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.button:active {
+    background: #4b2104;
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Sezione immagine centrale */
+#immagineCentrale {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#immagineHeader {
+    max-width: 70%; /* Si adatta alla larghezza del contenitore */
+    height: auto; /* Mantiene l'aspetto corretto */
+    border-radius: 12px;
+}
+
+/* Contenitore prodotti */
+#contenitoreProdotti {
+    display: flex; /* Dispone i prodotti in una riga */
+    justify-content: center; /* Centra i prodotti */
+    gap: 20px; /* Spaziatura tra i prodotti */
+    margin-top: 50px;
+    flex-wrap: wrap; /* Permette ai prodotti di andare a capo quando lo spazio è insufficiente */
+}
+
+/* Prodotti */
+.prodotto {
+    display: block;
+    width: 250px; /* Imposta una larghezza maggiore per i prodotti */
+    height: 250px; /* Imposta un'altezza maggiore per i prodotti */
+}
+
+.prodotto img {
+    width: 100%; /* Adatta l'immagine alla larghezza del quadrato */
+    height: 100%; /* Adatta l'immagine all'altezza del quadrato */
+    object-fit: cover; /* Assicura che l'immagine riempia completamente il quadrato senza distorsioni */
+    transition: transform 0.3s ease; /* Aggiunge una transizione per l'effetto hover */
+}
+
+.prodotto img:hover {
+    transform: scale(1.03); /* Effetto hover per ingrandire l'immagine */
+}
+
+.bottoneProdotti {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+/* MEDIA QUERY per schermi più piccoli */
+@media (max-width: 900px) {
+    #contenitoreHeader {
+        gap: 20px;
+    }
+
+    /* Logo sempre sopra */
+    #contenitoreLogo {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sezioneBottoni {
+        flex-direction: row; /* I bottoni saranno in una riga */
+        justify-content: center; /* Centra i bottoni */
+        gap: 10%; /* Aggiungi più spazio tra i bottoni */
+        width: 100%;
+    }
+
+    .button {
+        width: 100%;
+        text-align: center; /* Allinea il testo al centro */
+    }
+
+    #logoHeader {
+        width: 200px;
+    }
+
+    #immagineHeader {
+        width: 150%; /* Si adatta alla larghezza su dispositivi piccoli */
+    }
+}
+
+@media (max-width: 600px) {
+    #contenitoreLogo {
+        display: flex;
+        justify-content: center;
+        order: -1;
+    }
+
+    #contenitoreHeader {
+        flex-direction: column;  /* Cambia da orizzontale a verticale per dispositivi piccoli */
+        gap: 20px;
+    }
+
+    /* Contenitore prodotti su mobile */
+    #contenitoreProdotti {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Aggiungi uno spazio tra le righe */
+    }
+
+    .prodotto {
+        width: 100%; /* Ogni prodotto occuperà l'intera larghezza disponibile */
+        max-width: 300px; /* Limita la larghezza dei prodotti */
+    }
+}
+
+figcaption {
+    font-size: 120%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgba(129, 99, 8, 0.59);
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgba(4, 68, 4, 0.59);
+}
+/* Footer */
+footer {
+    background-color: rgb(255, 255, 255); /* Marrone cioccolato */
+    color: #ffffff;
+    padding: 40px 20px;
+    margin-top: -30px;
+}
+
+#contenitoreFooter {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-sezione h3 {
+    margin-bottom: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+    color: rgb(50, 32, 27);
+}
+
+.icone-pagamento i, .icone-social i {
+    font-size: 36px;
+    margin: 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.icone-social i:hover {
+    transform: scale(1.2);
+}
+
+.icone-social i , .icone-pagamento i{
+    color: rgb(50, 32, 27);
+}
+
+/* Social: togli sottolineatura ai link */
+.icone-social a {
+    text-decoration: none;
+    color: inherit; /* eredita il colore degli <i> */
+}
