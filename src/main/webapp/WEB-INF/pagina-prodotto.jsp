@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.Prodotto" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.text.DecimalFormat" %>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -9,9 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="<%= request.getContextPath() %>/css/index.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/css/pagina-prodotto.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/img/favicon.ico" rel="icon" type="image/x-icon">
-    <title>Tutti i prodotti</title>
+    <title>Dettagli Prodotto</title>
 </head>
 <body>
 <header>
@@ -35,7 +35,7 @@
 
         <!-- Sezione bottoni destra -->
         <div class="sezioneBottoni destra">
-            <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
+            <a href="<%= request.getContextPath() %>/pagina-carrello">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
             <a href="<%= request.getContextPath() %>/pagina-registrazione">
@@ -44,57 +44,43 @@
         </div>
     </div>
 </header>
-<h2>
-    Scopri tutti i prodotti di Regina Chocolate
-</h2>
-<hr style="height: 2px; border: none; background: linear-gradient(to right, white 0%, white 35%, #321F1B 50%, white 65%, white 100%); margin: 20px auto;">
+<hr>
 
-<!-- Filtro per tipologia -->
-<div style="margin: 20px; display: flex; justify-content: end;">
-    <label for="filtroTipologia"></label>
-    <select id="filtroTipologia">
-        <option value="">Tutti i prodotti</option>
-        <option value="Tavoletta">Tavoletta🍫</option>
-        <option value="Dolcetto">Dolcetto🍬</option>
-        <option value="Pasqua">Pasqua🐇</option>
-        <option value="Preparato">Preparato🍮</option>
-        <option value="Borsa">Borsa👜</option>
-    </select>
+<!-- Recupera il prodotto dalla request -->
+<%
+    Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
+    DecimalFormat df = new DecimalFormat("0.00");
+%>
+
+<div class="contenitore-prodotto">
+    <div class="contenitore-immagine">
+        <img src="<%= request.getContextPath() %>/img/<%= prodotto.getNome().toLowerCase().replace(" ", "_") %>.jpg"
+             alt="<%= prodotto.getNome() %>" id="immagineProdotto">
+    </div>
+
+    <div class="contenitore-dettagli">
+        <div class="descrizione-prodotto">
+            <h2 id="h2-prodotto"><%= prodotto.getNome() %></h2>
+            <p><%= prodotto.getDescrizione() %></p>
+        </div>
+
+        <div class="bottoni-interazione">
+            <form action="AggiungiAlCarrelloServlet" method="post">
+                <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
+                <button type="submit">Aggiungi al carrello</button>
+            </form>
+            <form action="RimuoviProdottoServlet" method="post">
+                <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
+                <button type="submit">Rimuovi</button>
+            </form>
+        </div>
+    </div>
 </div>
 
-
-
-<!-- Contenitore Prodotti -->
-<div id="contenitoreProdotti" style="margin-top: 0px; margin-bottom: 75px;">
-    <%
-        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-    %>
-
-    <% if (prodotti != null && !prodotti.isEmpty()) { %>
-    <% for (Prodotto p : prodotti) {
-        String nome = p.getNome();
-        String imgName = (nome != null) ? nome.toLowerCase().replaceAll(" ", "_") : "default";
-    %>
-    <figure class="prodotto" data-tipologia="<%= p.getTipologia() %>">
-        <a href="<%= request.getContextPath() %>/ProdottoServlet?id=<%= p.getId() %>">
-        <img alt="Immagine di <%= nome %>" src="<%= request.getContextPath() %>/img/<%= imgName %>.jpg" style="object-fit: contain;">
-    </a>
-    <figcaption>
-        <span style="color: rgb(85,46,35);">
-        <%= p.getNome() %>
-        </span>
-        <br>
-        <%= String.format("%.2f€", p.getPrezzo()) %>
-    </figcaption>
-</figure>
-    <% } %>
-    <% } else { %>
-    <p>Nessun prodotto disponibile.</p>
-    <% } %>
-</div>
 
 <hr><br><br>
 
+<!--Footer-->
 <footer>
     <div id="contenitoreFooter">
         <!-- Metodi di pagamento -->
@@ -120,7 +106,6 @@
         </div>
     </div>
 </footer>
-
 <div>
     <p style="font-size: 11px">
         <span style="display: flex; float: left; color: rgba(50, 32, 27, 20);">
@@ -133,22 +118,25 @@
     </p>
 </div>
 </body>
-
-
 <script>
-    document.getElementById("filtroTipologia").addEventListener("change", function () {
-        const filtro = this.value;
-        document.querySelectorAll(".prodotto").forEach(function (prodotto) {
-            const tipo = prodotto.dataset.tipologia;
-            if (!filtro || tipo === filtro) {
-                prodotto.style.display = "inline-block";
-            } else {
-                prodotto.style.display = "none";
-            }
-        });
-    });
+    function incrementa(max) {
+        let visibile = document.getElementById('quantitaVisualizzata');
+        let nascosto = document.getElementById('quantita');
+        let valore = parseInt(visibile.value);
+        if (valore < max) {
+            visibile.value = valore + 1;
+            nascosto.value = valore + 1;
+        }
+    }
+
+    function decrementa() {
+        let visibile = document.getElementById('quantitaVisualizzata');
+        let nascosto = document.getElementById('quantita');
+        let valore = parseInt(visibile.value);
+        if (valore > 1) {
+            visibile.value = valore - 1;
+            nascosto.value = valore - 1;
+        }
+    }
 </script>
-
-
-
 </html>

@@ -69,8 +69,7 @@ hr {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
-    width: auto;
-    /* Rimuove la larghezza fissa */
+    width: auto;/* Rimuove la larghezza fissa */
     max-width: 220px;
     /* Imposta una larghezza massima per evitare che i bottoni siano troppo grandi */
     word-wrap: break-word;
@@ -94,81 +93,88 @@ hr {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
 }
 
-/* Sezione immagine centrale */
-#immagineCentrale {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#immagineHeader {
-    max-width: 100%;
-    /* Si adatta alla larghezza del contenitore */
+#immagineProdotto {
+    width: 300px;
     height: auto;
-    /* Mantiene l'aspetto corretto */
-    border-radius: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-/*Contenitore tipologia (tutti-prodotti)*/
-#contenitoreTipologia {
+
+.contenitore-prodotto {
     display: flex;
-    justify-content: end;
-    margin-right: 2%;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 30px;
+    flex-wrap: wrap;
+}
+.contenitore-dettagli {
+    flex-grow: 1;
+    max-width: 600px;
 }
 
-/*Filtro tipologia (tutti-prodotti)*/
-#filtroTipologia {
-    background-color: white; /* Sfondo bianco */
-    color: rgb(58, 32, 27);;          /* Verde scuro pieno */
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-family: 'Cal Sans', sans-serif;
-    border-width: 5px;
-    border-color: rgb(58, 32, 27);
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Aggiungi l'ombra con opacità al 20% */
+.bottoni-interazione {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: center; /* opzionale: centra i form */
 }
 
-/* Contenitore prodotti */
-#contenitoreProdotti {
-    display: flex; /* Dispone i prodotti in una riga */
-    justify-content: center; /* Centra i prodotti */
-    gap: 20px; /* Spaziatura tra i prodotti */
-    margin-top: 50px;
-    flex-wrap: wrap;  /* Permette ai prodotti di andare a capo quando lo spazio è insufficiente */
+.bottoni-interazione form {
+    display: flex;
+    flex-direction: column; /* verticale: bottone sopra, quantità sotto */
+    align-items: center;
+    gap: 10px;
 }
 
-/* Prodotti */
-.prodotto {
-    display: block;
-    width: 200px;
-    height: 250px;
-}
-
-.prodotto img {
+.quantita-wrapper {
     width: 100%;
-    /* Adatta l'immagine alla larghezza del quadrato */
-    height: 100%;
-    /* Adatta l'immagine all'altezza del quadrato */
-    object-fit: cover;
-    /* Assicura che l'immagine riempia completamente il quadrato senza distorsioni */
-    transition: transform 0.3s ease;
-    /* Aggiunge una transizione per l'effetto hover */
-}
-
-.prodotto img:hover {
-    transform: scale(1.03); /* Effetto hover per ingrandire l'immagine */
-}
-
-.bottoneProdotti {
     display: flex;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-top: 2px;
+    order: 1; /* spinge sotto il bottone se usi flex-wrap */
+    flex-basis: 100%;
 }
 
-/* MEDIA QUERY per schermi più piccoli */
+#h2-prodotto {
+    text-align: center;
+    font-family: 'Cal Sans', sans-serif;
+    color: rgba(4, 68, 4, 0.59);
+}
+
+.selettore-quantita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selettore-quantita input[type="text"] {
+    width: 40px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #fff8f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.btn-quantita {
+    padding: 8px 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #3d221b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-quantita:hover {
+    background-color: #7b3f0f;
+}
+
+
 @media (max-width: 900px) {
     #contenitoreHeader {
         gap: 20px;
@@ -206,6 +212,11 @@ hr {
     }
 }
 
+/* Media che sotto i 715px mette l'immagine prodotto al centro*/
+@media (max-width: 715px) {
+}
+
+
 @media (max-width: 600px) {
     #contenitoreLogo {
         display: flex;
@@ -218,23 +229,9 @@ hr {
         /* Cambia da orizzontale a verticale per dispositivi piccoli */
         gap: 20px;
     }
-
-    /* Contenitore prodotti su mobile */
-    #contenitoreProdotti {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        /* Aggiungi uno spazio tra le righe */
-    }
-
-    .prodotto {
-        width: 100%;
-        /* Ogni prodotto occuperà l'intera larghezza disponibile */
-        max-width: 300px;
-        /* Limita la larghezza dei prodotti */
-    }
 }
 
+/*FigCaption*/
 figcaption {
     font-size: 120%;
     font-family: 'Cal Sans', sans-serif;
@@ -242,6 +239,7 @@ figcaption {
     text-align: center;
 }
 
+/*Modifica degli H2*/
 h2 {
     text-align: center;
     font-family: 'Cal Sans', sans-serif;
@@ -256,7 +254,6 @@ footer {
     padding: 40px 20px;
     margin-top: -30px;
 }
-
 #contenitoreFooter {
     display: flex;
     justify-content: space-around;
@@ -264,7 +261,6 @@ footer {
     gap: 30px;
     text-align: center;
 }
-
 .footer-sezione h3 {
     margin-bottom: 15px;
     font-family: 'Cal Sans', sans-serif;

@@ -69,11 +69,16 @@
         String nome = p.getNome();
         String imgName = (nome != null) ? nome.toLowerCase().replaceAll(" ", "_") : "default";
     %>
-    <figure class="prodotto">
-        <a href="<%= request.getContextPath() %>pagina-prodotto.jsp?id=<%= p.getId() %>">
+    <figure class="prodotto" data-tipologia="<%= p.getTipologia() %>">
+        <!-- Modifica dell'URL per chiamare la servlet con il parametro id -->
+        <a href="<%= request.getContextPath() %>/ProdottoServlet?id=<%= p.getId() %>">
             <img alt="Immagine di <%= nome %>" src="<%= request.getContextPath() %>/img/<%= imgName %>.jpg" style="object-fit: contain;">
         </a>
         <figcaption>
+        <span style="color: rgb(85,46,35);">
+            <%= p.getNome() %>
+        </span>
+            <br>
             <%= String.format("%.2f€", p.getPrezzo()) %>
         </figcaption>
     </figure>
@@ -83,7 +88,7 @@
     <% } %>
 </div>
 
-<br><br>
+<br><br><br>
 <div class="bottoneProdotti">
     <a href="<%= request.getContextPath() %>/TuttiProdottiServlet">
     <button class="button" type="button" style="font-family: 'Cal Sans', sans-serif;">Tutti i prodotti</button>

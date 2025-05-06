@@ -38,5 +38,32 @@ public class ProdottoDAO {
         return prodotti; //Ritorno della lista di prodotti
     }
 
+    public Prodotto getProdottoById(int id) {
+        Prodotto prodotto = null;
 
+        // Tenta la connessione al database
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE id_prodotto = ?");
+            ps.setInt(1, id);  // Imposta l'ID del prodotto nella query
+
+            ResultSet rs = ps.executeQuery();
+
+            // Se il risultato esiste, crea l'oggetto Prodotto
+            if (rs.next()) {
+                prodotto = new Prodotto();
+                prodotto.setId(rs.getInt("id_prodotto"));
+                prodotto.setNome(rs.getString("nome"));
+                prodotto.setDescrizione(rs.getString("descrizione"));
+                prodotto.setPrezzo(rs.getDouble("prezzo"));
+                prodotto.setQuantita(rs.getInt("quantita"));
+                prodotto.setTipologia(rs.getString("tipologia"));
+                prodotto.setPreferito(rs.getInt("preferito"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel recupero del prodotto dal database");
+        }
+
+        return prodotto;  // Ritorna l'oggetto Prodotto (può essere null se non trovato)
+    }
 }
