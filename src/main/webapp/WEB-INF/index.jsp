@@ -42,7 +42,7 @@
             <a href="<%= request.getContextPath() %>/pagina-carrello">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
-            <a href="<%= request.getContextPath() %>/pagina-registrazione">
+            <a href="<%= request.getContextPath() %>/login.jsp">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
         </div>

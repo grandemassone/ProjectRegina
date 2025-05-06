@@ -131,7 +131,7 @@ hr {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 5px;
     order: 1; /* spinge sotto il bottone se usi flex-wrap */
     flex-basis: 100%;
 }

@@ -14,23 +14,22 @@ public class ProdottoDAO {
         List<Prodotto> prodotti = new ArrayList<>();
 
         //Tento la connessione al database
-        try (Connection con = ConPool.getConnection()) {
+        try(Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto");
             ResultSet rs = ps.executeQuery();
 
             //Iterazione sui risultati della query
-            while (rs.next()) {
+            while(rs.next()) {
                 Prodotto p = new Prodotto();
-                p.setId(rs.getInt("id_prodotto"));
+                p.setId(rs.getInt("idProdotto"));
                 p.setNome(rs.getString("nome"));
                 p.setDescrizione(rs.getString("descrizione"));
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setQuantita(rs.getInt("quantita"));
                 p.setTipologia(rs.getString("tipologia"));
-                p.setPreferito(rs.getInt("preferito"));
                 prodotti.add(p);
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Errore nel recupero dei dati dal database");
         }
@@ -38,28 +37,27 @@ public class ProdottoDAO {
         return prodotti; //Ritorno della lista di prodotti
     }
 
-    public Prodotto getProdottoById(int id) {
+    public Prodotto getProdottoById(int idProdotto) {
         Prodotto prodotto = null;
 
         // Tenta la connessione al database
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE id_prodotto = ?");
-            ps.setInt(1, id);  // Imposta l'ID del prodotto nella query
+        try(Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE idProdotto = ?");
+            ps.setInt(1, idProdotto);  // Imposta l'ID del prodotto nella query
 
             ResultSet rs = ps.executeQuery();
 
             // Se il risultato esiste, crea l'oggetto Prodotto
-            if (rs.next()) {
+            if(rs.next()) {
                 prodotto = new Prodotto();
-                prodotto.setId(rs.getInt("id_prodotto"));
+                prodotto.setId(rs.getInt("idProdotto"));
                 prodotto.setNome(rs.getString("nome"));
                 prodotto.setDescrizione(rs.getString("descrizione"));
                 prodotto.setPrezzo(rs.getDouble("prezzo"));
                 prodotto.setQuantita(rs.getInt("quantita"));
                 prodotto.setTipologia(rs.getString("tipologia"));
-                prodotto.setPreferito(rs.getInt("preferito"));
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Errore nel recupero del prodotto dal database");
         }
@@ -67,33 +65,35 @@ public class ProdottoDAO {
         return prodotto;  // Ritorna l'oggetto Prodotto (può essere null se non trovato)
     }
 
-    public boolean setPreferitoById(int id) {
+    public boolean isInPreferiti(int idUtente, int idProdotto) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE prodotto SET preferito = 1 WHERE id_prodotto = ?"
-            );
-            ps.setInt(1, id);
-
-            int rowsUpdated = ps.executeUpdate();
-            return rowsUpdated > 0;  // true se almeno una riga è stata aggiornata
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nell'aggiornamento del campo preferito", e);
+                    "SELECT * FROM preferiti WHERE id_utente = ? AND id_prodotto = ?");
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
         }
     }
 
-    public boolean removePreferitoById(int id) {
+    public void aggiungiAPreferiti(int idUtente, int idProdotto) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE prodotto SET preferito = 0 WHERE id_prodotto = ?"
-            );
-            ps.setInt(1, id);
-
-            int rowsUpdated = ps.executeUpdate();
-            return rowsUpdated > 0;  // true se almeno una riga è stata aggiornata
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nell'aggiornamento del campo preferito", e);
+                    "INSERT INTO preferiti (id_utente, id_prodotto) VALUES (?, ?)");
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+            ps.executeUpdate();
         }
     }
+
+    public void rimuoviDaPreferiti(int idUtente, int idProdotto) throws SQLException {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM preferiti WHERE id_utente = ? AND id_prodotto = ?");
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+            ps.executeUpdate();
+        }
+    }
+
 }

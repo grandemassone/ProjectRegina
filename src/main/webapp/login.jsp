@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.Prodotto" %>
-<%@ page import="java.util.List" %>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="<%= request.getContextPath() %>/css/index.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/css/login.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/img/favicon.ico" rel="icon" type="image/x-icon">
     <title>Tutti i prodotti</title>
 </head>
@@ -44,56 +42,62 @@
         </div>
     </div>
 </header>
-<h2>
-    Scopri tutti i prodotti di Regina Chocolate
-</h2>
-<hr style="height: 2px; border: none; background: linear-gradient(to right, white 0%, white 35%, #321F1B 50%, white 65%, white 100%); margin: 20px auto;">
 
-<!-- Filtro per tipologia -->
-<div style="margin: 20px; display: flex; justify-content: end;">
-    <label for="filtroTipologia"></label>
-    <select id="filtroTipologia">
-        <option value="">Tutti i prodotti</option>
-        <option value="Tavoletta">Tavoletta🍫</option>
-        <option value="Dolcetto">Dolcetto🍬</option>
-        <option value="Pasqua">Pasqua🐇</option>
-        <option value="Preparato">Preparato🍮</option>
-        <option value="Borsa">Borsa👜</option>
-    </select>
+<hr>
+
+
+<!-- Contenitore dei form -->
+<div id="contenitore-form">
+    <!-- Form di registrazione -->
+    <div class="form-box">
+        <h2>Registrati</h2>
+        <form action="<%= request.getContextPath() %>/RegisterServlet" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+                <div class="error" id="nomeError"></div>
+            </div>
+            <div class="form-group">
+                <label for="cognome">Cognome:</label>
+                <input type="text" id="cognome" name="cognome" required>
+                <div class="error" id="cognomeError"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="emailError"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error" id="passwordError"></div>
+            </div>
+            <button type="submit">Registrati</button>
+        </form>
+    </div>
+
+    <!-- Form di login -->
+    <div class="form-box">
+        <h2>Login</h2>
+        <form action="<%= request.getContextPath() %>/LoginServlet" method="POST">
+            <div class="form-group">
+                <label for="emailLogin">Email:</label>
+                <input type="email" id="emailLogin" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="passwordLogin">Password:</label>
+                <input type="password" id="passwordLogin" name="password" required>
+            </div>
+            <button type="submit">Accedi</button>
+        </form>
+    </div>
 </div>
 
+<br>
+<hr>
+<br><br>
 
-
-<!-- Contenitore Prodotti -->
-<div id="contenitoreProdotti" style="margin-top: 0px; margin-bottom: 75px;">
-    <%
-        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-    %>
-
-    <% if (prodotti != null && !prodotti.isEmpty()) { %>
-    <% for (Prodotto p : prodotti) {
-        String nome = p.getNome();
-        String imgName = (nome != null) ? nome.toLowerCase().replaceAll(" ", "_") : "default";
-    %>
-    <figure class="prodotto" data-tipologia="<%= p.getTipologia() %>">
-        <a href="<%= request.getContextPath() %>/ProdottoServlet?id=<%= p.getId() %>">
-        <img alt="Immagine di <%= nome %>" src="<%= request.getContextPath() %>/img/<%= imgName %>.jpg" style="object-fit: contain;">
-    </a>
-    <figcaption>
-        <span style="color: rgb(85,46,35);">
-        <%= p.getNome() %>
-        </span>
-        <br>
-        <%= String.format("%.2f€", p.getPrezzo()) %>
-    </figcaption>
-</figure>
-    <% } %>
-    <% } else { %>
-    <p>Nessun prodotto disponibile.</p>
-    <% } %>
-</div>
-
-<hr><br><br>
+<!-- Footer -->
 
 <footer>
     <div id="contenitoreFooter">
@@ -133,22 +137,4 @@
     </p>
 </div>
 </body>
-
-
-<script>
-    document.getElementById("filtroTipologia").addEventListener("change", function () {
-        const filtro = this.value;
-        document.querySelectorAll(".prodotto").forEach(function (prodotto) {
-            const tipo = prodotto.dataset.tipologia;
-            if (!filtro || tipo === filtro) {
-                prodotto.style.display = "inline-block";
-            } else {
-                prodotto.style.display = "none";
-            }
-        });
-    });
-</script>
-
-
-
 </html>

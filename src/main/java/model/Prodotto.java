@@ -1,7 +1,7 @@
 package model;
 
 public class Prodotto {
-    private int id;
+    private int idProdotto;
     private String nome;
     private String descrizione;
     private double prezzo;
@@ -12,10 +12,10 @@ public class Prodotto {
     //Costruttore, setter e getter
     public Prodotto() {}
     public int getId() {
-        return id;
+        return idProdotto;
     }
     public void setId(int id) {
-        this.id = id;
+        this.idProdotto = id;
     }
     public String getNome() {
         return nome;

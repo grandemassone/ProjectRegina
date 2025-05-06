@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.Prodotto" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.List" %>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -38,7 +39,7 @@
             <a href="<%= request.getContextPath() %>/pagina-carrello">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
-            <a href="<%= request.getContextPath() %>/pagina-registrazione">
+            <a href="<%= request.getContextPath() %>/login.jsp">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
         </div>
@@ -100,21 +101,29 @@
                 </div>
             </form>
 
+
+            <%
+                List<Integer> preferiti = (List<Integer>) session.getAttribute("preferiti");
+                boolean isPreferito = preferiti != null && preferiti.contains(prodotto.getId());
+            %>
+
             <!-- Aggiungi ai preferiti -->
-            <form action="<%= request.getContextPath() %>/PreferitiServlet" method="post">
+            <form action="<%= request.getContextPath() %>/PreferitiServlet" method="get">
                 <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
-                <button type="submit" class="button"><i class="fas fa-heart"></i></button>
+                <button style="padding-bottom: 26px; padding-top: 26px" type="submit" class="button">
+                    <i class="fas fa-heart"></i>
+                </button>
             </form>
         </div>
     </div>
-
 </div>
 
 <!-- Footer -->
+
 <br>
 <hr>
-<br><br>
-
+<br>
+<br>
 <footer>
     <div id="contenitoreFooter">
         <!-- Metodi di pagamento -->
