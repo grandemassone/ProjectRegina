@@ -12,14 +12,9 @@ public class test {
         try {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             prodotti = prodottoDAO.doRetrieveAll();
+            prodottoDAO.removePreferitoById(prodotti.get(3).getId());
         } catch (Exception e) {
             e.printStackTrace(); // Oppure usa un logger per registrare l'errore
-        }
-        for (Prodotto prodotto : prodotti) {
-            System.out.println(prodotto.getNome());
-            System.out.println(prodotto.getPrezzo());
-            System.out.println(prodotto.getQuantita());
-            System.out.println(prodotto.getDescrizione());
         }
     }
 }

@@ -66,4 +66,34 @@ public class ProdottoDAO {
 
         return prodotto;  // Ritorna l'oggetto Prodotto (può essere null se non trovato)
     }
+
+    public boolean setPreferitoById(int id) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE prodotto SET preferito = 1 WHERE id_prodotto = ?"
+            );
+            ps.setInt(1, id);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;  // true se almeno una riga è stata aggiornata
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nell'aggiornamento del campo preferito", e);
+        }
+    }
+
+    public boolean removePreferitoById(int id) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE prodotto SET preferito = 0 WHERE id_prodotto = ?"
+            );
+            ps.setInt(1, id);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;  // true se almeno una riga è stata aggiornata
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nell'aggiornamento del campo preferito", e);
+        }
+    }
 }
