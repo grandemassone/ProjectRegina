@@ -53,34 +53,68 @@
 %>
 
 <div class="contenitore-prodotto">
-    <div class="contenitore-immagine">
+    <!-- Immagine prodotto -->
+    <figure>
         <img src="<%= request.getContextPath() %>/img/<%= prodotto.getNome().toLowerCase().replace(" ", "_") %>.jpg"
              alt="<%= prodotto.getNome() %>" id="immagineProdotto">
-    </div>
+        <figcaption style="margin-top: 10px; font-size: x-large"><%=df.format(prodotto.getPrezzo()) %>€</figcaption>
+    </figure>
 
+
+    <!-- Dettagli accanto all'immagine -->
     <div class="contenitore-dettagli">
-        <div class="descrizione-prodotto">
-            <h2 id="h2-prodotto"><%= prodotto.getNome() %></h2>
-            <p><%= prodotto.getDescrizione() %></p>
+        <h2 id="h2-prodotto"><%= prodotto.getNome() + " | " + prodotto.getTipologia() %>
+        </h2>
+        <div style="font-size: 1rem; font-weight: 500; margin-top: 10px; padding: 6px 12px; border-radius: 5px; background-color: #ffffff; color: rgb(58, 32, 27); box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <b>
+            <p><%= prodotto.getDescrizione() %>
+            </p>
+            <p>
+                <%= prodotto.getQuantita() > 0 ? (prodotto.getQuantita() == 1 ? "!Ultimo pezzo!" : "Sono disponibili " + prodotto.getQuantita() + " pezzi!") : "Non disponibile!"%>
+            </p>
+            </b>
         </div>
-
+        <!-- Bottoni interazione -->
         <div class="bottoni-interazione">
-            <form action="AggiungiAlCarrelloServlet" method="post">
+            <!-- Aggiungi al carrello -->
+            <form action="<%= request.getContextPath() %>/AggiungiAlCarrelloServlet" method="post">
                 <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
-                <button type="submit">Aggiungi al carrello</button>
+
+                <button type="submit" class="button">
+                    Aggiungi al carrello <br> <i class="fas fa-shopping-cart"></i>
+                </button>
+
+                <!-- Selettore quantità sotto al bottone -->
+                <div class="quantita-wrapper">
+                    <label for="quantita"></label>
+                    <div class="selettore-quantita">
+                        <button type="button" class="btn-quantita" onclick="decrementa()"
+                                style="padding-top: 5px; padding-bottom: 8px">−
+                        </button>
+                        <input type="text" id="quantitaVisualizzata" value="1" disabled>
+                        <input type="hidden" id="quantita" name="quantita" value="1">
+                        <button type="button" class="btn-quantita" onclick="incrementa(<%= prodotto.getQuantita() %>)"
+                                style="padding-top: 5px; padding-bottom: 8px">+
+                        </button>
+                    </div>
+                </div>
             </form>
-            <form action="RimuoviProdottoServlet" method="post">
+
+            <!-- Aggiungi ai preferiti -->
+            <form action="<%= request.getContextPath() %>/PreferitiServlet" method="post">
                 <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
-                <button type="submit">Rimuovi</button>
+                <button type="submit" class="button"><i class="fas fa-heart"></i></button>
             </form>
         </div>
     </div>
+
 </div>
 
+<!-- Footer -->
+<br>
+<hr>
+<br><br>
 
-<hr><br><br>
-
-<!--Footer-->
 <footer>
     <div id="contenitoreFooter">
         <!-- Metodi di pagamento -->
@@ -106,6 +140,7 @@
         </div>
     </div>
 </footer>
+
 <div>
     <p style="font-size: 11px">
         <span style="display: flex; float: left; color: rgba(50, 32, 27, 20);">
