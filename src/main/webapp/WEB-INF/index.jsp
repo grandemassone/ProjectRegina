@@ -125,8 +125,8 @@
 
 <div>
     <p style="font-size: 11px">
-        <span style="display: flex; float: left; color: rgba(50, 32, 27, 20);">
-            ©2025 ReginaChocolate IT <br>
+        <span style="display: flex; float: left; color: rgba(50, 32, 27, 20)">
+            ©2025 ®ReginaChocolate IT <br>
             Regina Chocolate S.p.A. Via Antani 34, Angri, Italy
         </span>
         <span style="display: flex; justify-content: end; color: rgba(50, 32, 27, 20)">
