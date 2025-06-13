@@ -7,7 +7,7 @@ public class Prodotto {
     private double prezzo;
     private int quantita;
     private String tipologia;
-    private int preferito;
+    private String ingredienti;
 
     //Costruttore, setter e getter
     public Prodotto() {}
@@ -51,14 +51,10 @@ public class Prodotto {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
-    public int getPreferito() {
-        return preferito;
+    public String getIngredienti() {
+        return ingredienti;
     }
-    public void setPreferito(int preferito) {
-        if (preferito == 0 || preferito == 1) {
-            this.preferito = preferito;
-        } else {
-            throw new IllegalArgumentException("Il campo 'preferito' può essere solo 0 o 1");
-        }
+    public void setIngredienti(String ingredienti) {
+        this.ingredienti = ingredienti;
     }
 }

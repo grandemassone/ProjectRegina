@@ -22,7 +22,7 @@
             <a href="<%= request.getContextPath() %>/TuttiProdottiServlet">
                 <button class="button" type="button"><i class="fas fa-compass"></i></button>
             </a>
-            <a href="<%= request.getContextPath() %>/pagina-preferiti.jsp">
+            <a href="<%= request.getContextPath() %>/TuttiPreferitiServlet">
                 <button class="button" type="button"><i class="fas fa-heart"></i></button>
             </a>
         </div>
@@ -36,12 +36,27 @@
 
         <!-- Sezione bottoni destra -->
         <div class="sezioneBottoni destra">
-            <a href="<%= request.getContextPath() %>/pagina-carrello">
+            <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
+            <%
+                // Se l’utente è loggato, mostro logout, altrimenti login
+                if (session.getAttribute("utente") != null) {
+            %>
+            <form action="<%= request.getContextPath() %>/LogoutServlet" method="post" style="display:inline">
+                <button class="button" type="submit" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+            <%
+            } else {
+            %>
             <a href="<%= request.getContextPath() %>/login.jsp">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
+            <%
+                }
+            %>
         </div>
     </div>
 </header>
@@ -68,11 +83,11 @@
         </h2>
         <div style="font-size: 1rem; font-weight: 500; margin-top: 10px; padding: 6px 12px; border-radius: 5px; background-color: #ffffff; color: rgb(58, 32, 27); box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
             <b>
-            <p><%= prodotto.getDescrizione() %>
-            </p>
-            <p>
-                <%= prodotto.getQuantita() > 0 ? (prodotto.getQuantita() == 1 ? "!Ultimo pezzo!" : "Sono disponibili " + prodotto.getQuantita() + " pezzi!") : "Non disponibile!"%>
-            </p>
+                <p><%= prodotto.getDescrizione() %>
+                </p>
+                <p>
+                    <%= prodotto.getQuantita() > 0 ? (prodotto.getQuantita() == 1 ? "!Ultimo pezzo!" : "Sono disponibili " + prodotto.getQuantita() + " pezzi!") : "Non disponibile!"%>
+                </p>
             </b>
         </div>
         <!-- Bottoni interazione -->

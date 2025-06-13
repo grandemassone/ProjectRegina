@@ -349,3 +349,16 @@ button:hover {
     font-size: 12px;
     margin-top: 5px;
 }
+#salutoPagina {
+    display: inline-block;
+    font-family: 'Cal Sans', sans-serif;
+    font-size: 1.2rem;
+    color: rgb(58, 32, 27);
+    background: rgb(255, 239, 228);      /* un crema tenue per contrasto */
+    padding: 10px 20px;                  /* simile al padding dei bottoni */
+    border-radius: 12px;                 /* stesse curve dei .button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;                   /* spazio e centratura */
+    text-align: center;
+    animation: fadeIn 1s ease-in;
+}

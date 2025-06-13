@@ -37,3 +37,7 @@ CREATE TABLE preferiti
 select * from prodotto;
 select * from utente;
 select * from preferiti;
+
+describe prodotto;
+describe utente;
+describe preferiti;

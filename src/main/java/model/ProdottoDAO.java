@@ -27,6 +27,7 @@ public class ProdottoDAO {
                 p.setPrezzo(rs.getDouble("prezzo"));
                 p.setQuantita(rs.getInt("quantita"));
                 p.setTipologia(rs.getString("tipologia"));
+                p.setIngredienti(rs.getString("ingredienti"));
                 prodotti.add(p);
             }
         } catch(SQLException e) {
@@ -96,4 +97,34 @@ public class ProdottoDAO {
         }
     }
 
+    public List<Prodotto> doRetrieveAllPreferiti(int idUtente) throws SQLException {
+        List<Prodotto> prodotti = new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM prodotto JOIN preferiti ON prodotto.idProdotto = preferiti.id_prodotto WHERE preferiti.id_utente = ?";;
+
+        // Stampo in log per sicurezza
+        System.out.println("SQL preferiti: " + sql);
+
+        try (Connection con = ConPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Prodotto p = new Prodotto();
+                    p.setId(rs.getInt("idProdotto"));
+                    p.setNome(rs.getString("nome"));
+                    p.setDescrizione(rs.getString("descrizione"));
+                    p.setPrezzo(rs.getDouble("prezzo"));
+                    p.setQuantita(rs.getInt("quantita"));
+                    p.setTipologia(rs.getString("tipologia"));
+                    p.setIngredienti(rs.getString("ingredienti"));
+                    prodotti.add(p);
+                }
+            }
+        }
+
+        return prodotti;
+    }
 }

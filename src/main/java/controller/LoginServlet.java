@@ -32,8 +32,7 @@ public class LoginServlet extends HttpServlet {
             if (u != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("utente", u);
-                response.sendRedirect(request.getContextPath() + "/IndexServlet");
-                //CAMBIA INDEXSERVLET CON UNA JSP DI RISPOSTA QUANDO ACCEDI!!
+                response.sendRedirect(request.getContextPath() + "/index");
             } else {
                 request.setAttribute("error", "Credenziali non valide.");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);

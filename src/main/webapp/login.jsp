@@ -9,9 +9,23 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="<%= request.getContextPath() %>/css/login.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/img/favicon.ico" rel="icon" type="image/x-icon">
-    <title>Tutti i prodotti</title>
+    <title>Login & Registrazione</title>
 </head>
 <body>
+
+<%-- Se esiste un messaggio di alert in sessione, mostralo e poi rimuovilo --%>
+<%
+    String loginMessage = (String) session.getAttribute("loginMessage");
+    if (loginMessage != null) {
+%>
+<script type="text/javascript">
+    alert("<%= loginMessage.replace("\"", "\\\"") %>");
+</script>
+<%
+        session.removeAttribute("loginMessage");
+    }
+%>
+
 <header>
     <div id="contenitoreHeader">
         <!-- Sezione bottoni sinistra -->
@@ -19,7 +33,7 @@
             <a href="<%= request.getContextPath() %>/TuttiProdottiServlet">
                 <button class="button" type="button"><i class="fas fa-compass"></i></button>
             </a>
-            <a href="<%= request.getContextPath() %>/pagina-preferiti.jsp">
+            <a href="<%= request.getContextPath() %>/TuttiPreferitiServlet">
                 <button class="button" type="button"><i class="fas fa-heart"></i></button>
             </a>
         </div>
@@ -36,15 +50,29 @@
             <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
+            <%
+                // Se l’utente è loggato, mostro logout, altrimenti login
+                if (session.getAttribute("utente") != null) {
+            %>
+            <form action="<%= request.getContextPath() %>/LogoutServlet" method="post" style="display:inline">
+                <button class="button" type="submit" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+            <%
+            } else {
+            %>
             <a href="<%= request.getContextPath() %>/login.jsp">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
+            <%
+                }
+            %>
         </div>
     </div>
 </header>
 
 <hr>
-
 
 <!-- Contenitore dei form -->
 <div id="contenitore-form">
@@ -98,7 +126,6 @@
 <br><br>
 
 <!-- Footer -->
-
 <footer>
     <div id="contenitoreFooter">
         <!-- Metodi di pagamento -->
@@ -127,14 +154,15 @@
 
 <div>
     <p style="font-size: 11px">
-        <span style="display: flex; float: left; color: rgba(50, 32, 27, 20)">
-            ©2025 ®ReginaChocolate IT <br>
+        <span style="display: flex; float: left; color: rgba(50, 32, 27, 0.2);">
+            ©2025 ®ReginaChocolate IT<br/>
             Regina Chocolate S.p.A. Via Antani 34, Angri, Italy
         </span>
-        <span style="display: flex; justify-content: end; color: rgba(50, 32, 27, 20)">
+        <span style="display: flex; justify-content: end; color: rgba(50, 32, 27, 0.2);">
             Created by Salvador Davide Passarelli and Salvatore Lepore
         </span>
     </p>
 </div>
+
 </body>
 </html>
