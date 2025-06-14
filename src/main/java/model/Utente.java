@@ -6,6 +6,7 @@ public class Utente {
     private String cognome;
     private String email;
     private String passkey;
+    private String ruolo;
 
     //Costruttore, getter e setter
     public Utente() {
@@ -39,5 +40,11 @@ public class Utente {
     }
     public void setPasskey(String passkey) {
         this.passkey = passkey;
+    }
+    public String getRuolo() {
+        return ruolo;
+    }
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
     }
 }

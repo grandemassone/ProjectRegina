@@ -21,7 +21,8 @@ CREATE TABLE utente
     nome      VARCHAR(50)        NOT NULL,
     cognome   VARCHAR(50)        NOT NULL,
     email     VARCHAR(50) UNIQUE NOT NULL,
-    passkey   VARCHAR(255)       NOT NULL
+    passkey   VARCHAR(255)       NOT NULL,
+    admin     VARCHAR(20) DEFAULT 'user'
 );
 
 -- Tabella per i preferiti

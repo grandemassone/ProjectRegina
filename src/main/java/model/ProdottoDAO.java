@@ -127,4 +127,39 @@ public class ProdottoDAO {
 
         return prodotti;
     }
+    public static List<Prodotto> doRetrieveQuantita() throws SQLException {
+        List<Prodotto> prodotti = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT nome, quantita FROM prodotto");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setNome(rs.getString("nome"));
+                p.setQuantita(rs.getInt("quantita"));
+                prodotti.add(p);
+            }
+        }
+        return prodotti;
+    }
+    public static Prodotto doRetrieveById(int id) throws SQLException {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE idProdotto = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt("idProdotto"));
+                p.setNome(rs.getString("nome"));
+                p.setDescrizione(rs.getString("descrizione"));
+                p.setPrezzo(rs.getDouble("prezzo"));
+                p.setQuantita(rs.getInt("quantita"));
+                p.setTipologia(rs.getString("tipologia"));
+                return p;
+            }
+            return null;
+        }
+    }
+
 }

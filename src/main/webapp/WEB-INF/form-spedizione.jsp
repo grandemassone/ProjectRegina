@@ -1,8 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.Prodotto" %>
-<%@ page import="java.util.List" %>
+<!-- form-spedizione.jsp -->
 <%@ page import="model.Utente" %>
-<html lang="it">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +11,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="<%= request.getContextPath() %>/css/index.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/img/favicon.ico" rel="icon" type="image/x-icon">
-    <title>Tutti i prodotti</title>
+    <title>Conferma Ordine</title>
 </head>
 <body>
 <header>
@@ -30,7 +29,8 @@
         <!-- Logo -->
         <div id="contenitoreLogo">
             <a href="<%= request.getContextPath() %>/index">
-                <img alt="Logo Regina Chocolate" id="logoHeader" src="<%= request.getContextPath() %>/img/logo.png">
+                <img alt="Logo Regina Chocolate" id="logoHeader"
+                     src="<%= request.getContextPath() %>/img/logo.png">
             </a>
         </div>
 
@@ -51,78 +51,47 @@
             <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
-            <%
-                // Se l’utente è loggato, mostro logout, altrimenti login
-                if (session.getAttribute("utente") != null) {
-            %>
+
+            <% if (utente != null) { %>
             <form action="<%= request.getContextPath() %>/LogoutServlet" method="post" style="display:inline">
                 <button class="button" type="submit" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </form>
-            <%
-            } else {
-            %>
+            <% } else { %>
             <a href="<%= request.getContextPath() %>/login.jsp">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
-            <%
-                }
-            %>
+            <% } %>
         </div>
     </div>
 </header>
-<h2>
-    Scopri tutti i prodotti di Regina Chocolate
-</h2>
-<hr style="height: 2px; border: none; background: linear-gradient(to right, white 0%, white 35%, #321F1B 50%, white 65%, white 100%); margin: 20px auto;">
 
-<!-- Filtro per tipologia -->
-<div style="margin: 20px; display: flex; justify-content: end;">
-    <label for="filtroTipologia"></label>
-    <select id="filtroTipologia">
-        <option value="">Tutti i prodotti</option>
-        <option value="Tavoletta">Tavoletta🍫</option>
-        <option value="Dolcetto">Dolcetto🍬</option>
-        <option value="Pasqua">Pasqua🐇</option>
-        <option value="Preparato">Preparato🍮</option>
-        <option value="Borsa">Borsa👜</option>
-    </select>
-</div>
-
-
-
-<!-- Contenitore Prodotti -->
-<div id="contenitoreProdotti" style="margin-top: 0px; margin-bottom: 75px;">
-    <%
-        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-    %>
-
-    <% if (prodotti != null && !prodotti.isEmpty()) { %>
-    <% for (Prodotto p : prodotti) {
-        String nome = p.getNome();
-        String imgName = (nome != null) ? nome.toLowerCase().replaceAll(" ", "_") : "default";
-    %>
-    <figure class="prodotto" data-tipologia="<%= p.getTipologia() %>">
-        <a href="<%= request.getContextPath() %>/ProdottoServlet?id=<%= p.getId() %>">
-        <img alt="Immagine di <%= nome %>" src="<%= request.getContextPath() %>/img/<%= imgName %>.jpg" style="object-fit: contain;">
-    </a>
-    <figcaption>
-        <span style="color: rgb(85,46,35);">
-        <%= p.getNome() %>
-        </span>
-        <br>
-        <%= String.format("%.2f€", p.getPrezzo()) %>
-    </figcaption>
-</figure>
+<hr>
+<%
+    Utente u = (Utente) session.getAttribute("utente");
+%>
+<form action="ConfermaOrdineServlet" method="post">
+    <% if (utente == null) { %>
+    <h2>Dati Utente</h2>
+    Nome: <input type="text" name="nome" required><br>
+    Cognome: <input type="text" name="cognome" required><br>
+    Email: <input type="email" name="email" required><br>
     <% } %>
-    <% } else { %>
-    <p>Nessun prodotto disponibile.</p>
-    <% } %>
-</div>
 
-<hr><br><br>
-
+    <h2>Indirizzo di Spedizione</h2>
+    Destinatario: <input type="text" name="destinatario" required><br>
+    Indirizzo: <input type="text" name="indirizzo" required><br>
+    Città: <input type="text" name="citta" required><br>
+    CAP: <input type="text" name="cap" required><br>
+    <br>
+    <button type="submit">Conferma e Paga</button>
+</form>
+<br>
+<hr>
+<br>
+<br>
+<!--FOOTER-->
 <footer>
     <div id="contenitoreFooter">
         <!-- Metodi di pagamento -->
@@ -150,33 +119,10 @@
 </footer>
 
 <div>
-    <p style="font-size: 11px">
-        <span style="display: flex; float: left; color: rgba(50, 32, 27, 20);">
-            ©2025 ®ReginaChocolate IT <br>
-            Regina Chocolate S.p.A. Via Antani 34, Angri, Italy
-        </span>
-        <span style="display: flex; justify-content: end; color: rgba(50, 32, 27, 20)">
-            Created by Salvador Davide Passarelli and Salvatore Lepore
-        </span>
+    <p style="font-size: 11px; color: rgba(50, 32, 27, 0.2);">
+        <span style="float: left;">©2025 ®ReginaChocolate IT<br>Regina Chocolate S.p.A. Via Antani 34, Angri, Italy</span>
+        <span style="float: right;">Created by Salvador Davide Passarelli and Salvatore Lepore</span>
     </p>
 </div>
 </body>
-
-
-<script>
-    document.getElementById("filtroTipologia").addEventListener("change", function () {
-        const filtro = this.value;
-        document.querySelectorAll(".prodotto").forEach(function (prodotto) {
-            const tipo = prodotto.dataset.tipologia;
-            if (!filtro || tipo === filtro) {
-                prodotto.style.display = "inline-block";
-            } else {
-                prodotto.style.display = "none";
-            }
-        });
-    });
-</script>
-
-
-
 </html>

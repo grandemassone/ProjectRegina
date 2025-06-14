@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtenteDAO {
     public static void doSave(Utente utente) throws SQLException {
@@ -35,11 +37,28 @@ public class UtenteDAO {
                 u.setCognome(rs.getString("cognome"));
                 u.setEmail(rs.getString("email"));
                 u.setPasskey(rs.getString("passkey"));
+                u.setRuolo(rs.getString("ruolo"));
                 return u;
             }
             return null;
         }
     }
 
+    public static List<Utente> doRetrieveAll() throws SQLException {
+        List<Utente> utenti = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM utente");
+            ResultSet rs = ps.executeQuery();
 
+            while (rs.next()) {
+                Utente u = new Utente();
+                u.setId(rs.getInt("idUtente"));
+                u.setNome(rs.getString("nome"));
+                u.setCognome(rs.getString("cognome"));
+                u.setEmail(rs.getString("email"));
+                utenti.add(u);
+            }
+        }
+        return utenti;
+    }
 }

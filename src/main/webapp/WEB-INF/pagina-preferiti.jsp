@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.Prodotto" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.Utente" %>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -30,6 +31,18 @@
             </a>
         </div>
         <div class="sezioneBottoni destra">
+            <%
+                Utente utente = (Utente) session.getAttribute("utente");
+                if (utente != null && "admin".equals(utente.getRuolo())) {
+            %>
+            <a href="<%= request.getContextPath() %>/AdminDashboardServlet">
+                <button class="button" type="button" title="Pannello Admin">
+                    <i class="fas fa-user-shield"></i>
+                </button>
+            </a>
+            <%
+                }
+            %>
             <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
