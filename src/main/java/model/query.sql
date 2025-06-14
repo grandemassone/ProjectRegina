@@ -4,7 +4,7 @@ use db_regina;
 -- Tabella principale dei prodotti
 CREATE TABLE prodotto
 (
-    id_prodotto INT PRIMARY KEY,
+    idProdotto INT PRIMARY KEY,
     nome        VARCHAR(50),
     descrizione VARCHAR(200),
     prezzo      DOUBLE,
@@ -12,11 +12,12 @@ CREATE TABLE prodotto
     tipologia   VARCHAR(50),
     ingredienti VARCHAR(200)
 );
+drop table utente;
 
 -- Tabella per gli utenti
 CREATE TABLE utente
 (
-    id_utente INT PRIMARY KEY,
+    idUtente INT PRIMARY KEY AUTO_INCREMENT,
     nome      VARCHAR(50)        NOT NULL,
     cognome   VARCHAR(50)        NOT NULL,
     email     VARCHAR(50) UNIQUE NOT NULL,
@@ -29,8 +30,8 @@ CREATE TABLE preferiti
     id_utente   INT NOT NULL,
     id_prodotto INT NOT NULL,
     PRIMARY KEY (id_utente, id_prodotto),
-    FOREIGN KEY (id_utente) REFERENCES utente (id_utente),
-    FOREIGN KEY (id_prodotto) REFERENCES prodotto (id_prodotto)
+    FOREIGN KEY (id_utente) REFERENCES utente (idUtente),
+    FOREIGN KEY (id_prodotto) REFERENCES prodotto (idProdotto)
 );
 
 -- Query di prova

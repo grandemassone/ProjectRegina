@@ -79,6 +79,17 @@
     <!-- Form di registrazione -->
     <div class="form-box">
         <h2>Sign in</h2>
+
+        <%
+            String erroreRegistrazione = (String) request.getAttribute("error");
+            String formAttivo = request.getParameter("form"); // opzionale per distinguere i due moduli
+            if (erroreRegistrazione != null && !"login".equals(formAttivo)) {
+        %>
+        <div style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;">
+            <%= erroreRegistrazione %>
+        </div>
+        <% } %>
+
         <form action="<%= request.getContextPath() %>/RegisterServlet" method="POST">
             <div class="form-group">
                 <label for="nome">Nome:</label>
@@ -107,6 +118,15 @@
     <!-- Form di login -->
     <div class="form-box">
         <h2>Login</h2>
+
+        <% String erroreLogin = (String) request.getAttribute("error"); %>
+        <% if (erroreLogin != null) { %>
+        <div style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;">
+            <%= erroreLogin %>
+        </div>
+
+        <% } %>
+
         <form action="<%= request.getContextPath() %>/LoginServlet" method="POST">
             <div class="form-group">
                 <label for="emailLogin">Email:</label>

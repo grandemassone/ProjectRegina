@@ -27,16 +27,18 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            Utente u = UtenteDAO.doLogin(email, password);
+            Utente u = UtenteDAO.doRetrieveByEmail(email);
 
             if (u != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("utente", u);
-                response.sendRedirect(request.getContextPath() + "/index");
-            } else {
-                request.setAttribute("error", "Credenziali non valide.");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                String hashedInputPassword = HashUtil.toHash(password);
+                if (hashedInputPassword.equals(u.getPasskey())) {
+                    request.getSession().setAttribute("utente", u);
+                    response.sendRedirect(request.getContextPath() + "/index");
+                    return;
+                }
             }
+            request.setAttribute("error", "Credenziali non valide.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
 
         } catch (SQLException e) {
             throw new ServletException("Errore durante il login", e);
