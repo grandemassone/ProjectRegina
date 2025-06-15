@@ -41,14 +41,14 @@ public class ProdottoDAO {
     public Prodotto getProdottoById(int idProdotto) {
         Prodotto prodotto = null;
 
-        // Tenta la connessione al database
+        //Tenta la connessione al database
         try(Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE idProdotto = ?");
-            ps.setInt(1, idProdotto);  // Imposta l'ID del prodotto nella query
+            ps.setInt(1, idProdotto);  //Imposta l'ID del prodotto nella query
 
             ResultSet rs = ps.executeQuery();
 
-            // Se il risultato esiste, crea l'oggetto Prodotto
+            //Se il risultato esiste, crea l'oggetto Prodotto
             if(rs.next()) {
                 prodotto = new Prodotto();
                 prodotto.setId(rs.getInt("idProdotto"));
@@ -63,7 +63,7 @@ public class ProdottoDAO {
             throw new RuntimeException("Errore nel recupero del prodotto dal database");
         }
 
-        return prodotto;  // Ritorna l'oggetto Prodotto (può essere null se non trovato)
+        return prodotto;  //Ritorna l'oggetto Prodotto (può essere null se non trovato)
     }
 
     public boolean isInPreferiti(int idUtente, int idProdotto) throws SQLException {
@@ -103,7 +103,7 @@ public class ProdottoDAO {
         String sql =
                 "SELECT * FROM prodotto JOIN preferiti ON prodotto.idProdotto = preferiti.id_prodotto WHERE preferiti.id_utente = ?";;
 
-        // Stampo in log per sicurezza
+        //Stampo in log per sicurezza
         System.out.println("SQL preferiti: " + sql);
 
         try (Connection con = ConPool.getConnection();
@@ -128,20 +128,21 @@ public class ProdottoDAO {
         return prodotti;
     }
     public static List<Prodotto> doRetrieveQuantita() throws SQLException {
-        List<Prodotto> prodotti = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT nome, quantita FROM prodotto");
+            PreparedStatement ps = con.prepareStatement("SELECT idProdotto, nome, quantita FROM prodotto");
             ResultSet rs = ps.executeQuery();
-
+            List<Prodotto> prodotti = new ArrayList<>();
             while (rs.next()) {
                 Prodotto p = new Prodotto();
+                p.setId(rs.getInt("idProdotto")); //IMPORTANTE
                 p.setNome(rs.getString("nome"));
                 p.setQuantita(rs.getInt("quantita"));
                 prodotti.add(p);
             }
+            return prodotti;
         }
-        return prodotti;
     }
+
     public static Prodotto doRetrieveById(int id) throws SQLException {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto WHERE idProdotto = ?");
@@ -161,5 +162,15 @@ public class ProdottoDAO {
             return null;
         }
     }
+
+    public static void aggiornaQuantita(int idProdotto, int nuovaQuantita) throws SQLException {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE prodotto SET quantita = ? WHERE idProdotto = ?");
+            ps.setInt(1, nuovaQuantita);
+            ps.setInt(2, idProdotto);
+            ps.executeUpdate();
+        }
+    }
+
 
 }
