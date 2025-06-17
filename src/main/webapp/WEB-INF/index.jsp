@@ -13,11 +13,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Fa in modo che i testi usino subito il font corretto appena caricato-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Carico il font carl-sans da googl font -->
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <!-- Prendo le icone vettoriali fas-fa -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="<%= request.getContextPath() %>/css/index.css" rel="stylesheet">
     <link href="<%= request.getContextPath() %>/img/favicon.ico" rel="icon" type="image/x-icon">
     <title>Regina Chocolate</title>
@@ -78,8 +81,7 @@
 </header>
 
 <hr>
-
-<%-- Saluto spostato qui, poco sopra l’immagine centrale --%>
+<!-- Saluto dopo che l'utente si logga o registra -->
 <% if (u != null) { %>
 <div id="salutoPagina" style="display: block;
 font-family: 'Cal Sans', sans-serif;
@@ -118,7 +120,7 @@ animation: fadeIn 1s ease-in;">
                 ? nome.toLowerCase().replaceAll("\\s+", "_")
                 : "default";
     %>
-    <figure class="prodotto" data-tipologia="<%= p.getTipologia() %>">
+    <figure class="prodotto">
         <a href="<%= request.getContextPath() %>/ProdottoServlet?id=<%= p.getId() %>">
             <img alt="Immagine di <%= nome %>"
                  src="<%= request.getContextPath() %>/img/<%= imgName %>.jpg"

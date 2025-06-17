@@ -162,7 +162,7 @@
 </div>
 </body>
 
-
+<!-- Script per filtro tipologia -->
 <script>
     document.getElementById("filtroTipologia").addEventListener("change", function () {
         const filtro = this.value;
@@ -176,7 +176,4 @@
         });
     });
 </script>
-
-
-
 </html>

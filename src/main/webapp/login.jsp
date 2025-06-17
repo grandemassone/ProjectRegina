@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<%-- Se esiste un messaggio di alert in sessione, mostralo e poi rimuovilo --%>
+<%-- Alert solo per messaggi generici (es. logout o accesso richiesto) --%>
 <%
     String loginMessage = (String) session.getAttribute("loginMessage");
     if (loginMessage != null) {
@@ -29,7 +29,6 @@
 
 <header>
     <div id="contenitoreHeader">
-        <!-- Sezione bottoni sinistra -->
         <div class="sezioneBottoni sinistra">
             <a href="<%= request.getContextPath() %>/TuttiProdottiServlet">
                 <button class="button" type="button"><i class="fas fa-compass"></i></button>
@@ -39,14 +38,12 @@
             </a>
         </div>
 
-        <!-- Logo -->
         <div id="contenitoreLogo">
             <a href="<%= request.getContextPath() %>/index">
                 <img alt="Logo Regina Chocolate" id="logoHeader" src="<%= request.getContextPath() %>/img/logo.png">
             </a>
         </div>
 
-        <!-- Sezione bottoni destra -->
         <div class="sezioneBottoni destra">
             <%
                 Utente utente = (Utente) session.getAttribute("utente");
@@ -64,7 +61,6 @@
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
             <%
-                // Se l’utente è loggato, mostro logout, altrimenti login
                 if (session.getAttribute("utente") != null) {
             %>
             <form action="<%= request.getContextPath() %>/LogoutServlet" method="post" style="display:inline">
@@ -95,7 +91,7 @@
 
         <%
             String erroreRegistrazione = (String) request.getAttribute("error");
-            String formAttivo = request.getParameter("form"); // opzionale per distinguere i due moduli
+            String formAttivo = request.getParameter("form");
             if (erroreRegistrazione != null && !"login".equals(formAttivo)) {
         %>
         <div style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;">
@@ -107,22 +103,18 @@
             <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required>
-                <div class="error" id="nomeError"></div>
             </div>
             <div class="form-group">
                 <label for="cognome">Cognome:</label>
                 <input type="text" id="cognome" name="cognome" required>
-                <div class="error" id="cognomeError"></div>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-                <div class="error" id="emailError"></div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-                <div class="error" id="passwordError"></div>
             </div>
             <button type="submit">Registrati</button>
         </form>
@@ -132,15 +124,10 @@
     <div class="form-box">
         <h2>Login</h2>
 
-        <% String erroreLogin = (String) request.getAttribute("error"); %>
-        <% if (erroreLogin != null) { %>
-        <div style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;">
-            <%= erroreLogin %>
-        </div>
+        <div id="loginError" style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;"></div>
 
-        <% } %>
-
-        <form action="<%= request.getContextPath() %>/LoginServlet" method="POST">
+        <!-- form=login serve per distinguere lato JSP -->
+        <form action="<%= request.getContextPath() %>/LoginServlet?form=login" method="POST">
             <div class="form-group">
                 <label for="emailLogin">Email:</label>
                 <input type="email" id="emailLogin" name="email" required>
@@ -154,14 +141,11 @@
     </div>
 </div>
 
-<br>
-<hr>
-<br><br>
+<br><hr><br><br>
 
 <!-- Footer -->
 <footer>
     <div id="contenitoreFooter">
-        <!-- Metodi di pagamento -->
         <div class="footer-sezione">
             <h3>Metodi di pagamento</h3>
             <div class="icone-pagamento">
@@ -172,7 +156,6 @@
             </div>
         </div>
 
-        <!-- Social media -->
         <div class="footer-sezione">
             <h3>Seguici</h3>
             <div class="icone-social">
@@ -196,6 +179,23 @@
         </span>
     </p>
 </div>
+
+<!-- SCRIPT per mostrare errore login -->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const loginError = "<%=
+            ("login".equals(request.getParameter("form")) && request.getAttribute("error") != null)
+            ? request.getAttribute("error").toString().replace("\"", "\\\"")
+            : ""
+        %>";
+        if (loginError) {
+            const loginErrorDiv = document.getElementById("loginError");
+            if (loginErrorDiv) {
+                loginErrorDiv.textContent = loginError;
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
