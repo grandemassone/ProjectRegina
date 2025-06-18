@@ -51,7 +51,7 @@
             <%
                 }
             %>
-            <a href="<%= request.getContextPath() %>/AggiungiAlCarrelloServlet">
+            <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
 
@@ -101,7 +101,7 @@
                 double subtotale = p.getPrezzo() * q;
                 totale += subtotale;
         %>
-        <tr style="border-bottom: 1px solid #ddd;">
+        <tr style="border-bottom: 1px solid #ddd; text-align: center">
             <td style="padding: 10px;"><%= p.getNome() %></td>
             <td style="padding: 10px;"><%= q %></td>
             <td style="padding: 10px;"><%= df.format(p.getPrezzo()) %> €</td>
@@ -126,6 +126,19 @@
         cursor: pointer;
         transition: background-color 0.3s ease;">
             Procedi al pagamento <i class="fas fa-credit-card" style="margin-left: 8px;"></i>
+        </button>
+    </form>
+    <form action="<%= request.getContextPath() %>/SvuotaCarrelloServlet" method="post" style="text-align: right; margin-top: 10px;">
+        <button type="submit" class="button" style="
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        background-color: #cc0000;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;">
+            Svuota carrello <i class="fas fa-trash" style="margin-left: 6px;"></i>
         </button>
     </form>
 

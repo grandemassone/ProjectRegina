@@ -111,10 +111,6 @@
             </form>
 
             <!-- Preferiti -->
-            <%
-                List<Integer> preferiti = (List<Integer>) session.getAttribute("preferiti");
-                boolean isPreferito = preferiti != null && preferiti.contains(prodotto.getId());
-            %>
             <form action="<%= request.getContextPath() %>/PreferitiServlet" method="get">
                 <input type="hidden" name="idProdotto" value="<%= prodotto.getId() %>">
                 <button style="padding-bottom: 26px; padding-top: 26px" type="submit" class="button">

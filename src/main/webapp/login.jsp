@@ -196,6 +196,14 @@
         }
     });
 </script>
+<%
+    String errore = request.getParameter("errore");
+    if ("loginNecessario".equals(errore)) {
+%>
+<script>
+    alert("Devi essere registrato e loggato per usare i preferiti.");
+</script>
+<% } %>
 
 </body>
 </html>

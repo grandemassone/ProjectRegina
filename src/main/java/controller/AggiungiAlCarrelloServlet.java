@@ -17,7 +17,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //Recupera sessione corrente o la crea
         HttpSession session = request.getSession();
 
         // Recupera id prodotto e quantità dal form
@@ -28,13 +28,14 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
             // Recupera il prodotto dal database
             Prodotto prodotto = ProdottoDAO.doRetrieveById(idProdotto);
 
+            //Non succede mai perché facciamo già il controllo in JavaScript
             if (prodotto == null || prodotto.getQuantita() < quantita) {
                 request.setAttribute("error", "Prodotto non disponibile o quantità richiesta troppo alta.");
                 request.getRequestDispatcher("/pagina-carrello.jsp").forward(request, response);
                 return;
             }
 
-            // Recupera il carrello dalla sessione (usiamo una mappa <Prodotto, Quantità>)
+            // Recupera o inizializza il carrello dalla sessione (usiamo una mappa <Prodotto, Quantità>)
             Map<Prodotto, Integer> carrello = (Map<Prodotto, Integer>) session.getAttribute("carrello");
             if (carrello == null) {
                 carrello = new HashMap<>();
