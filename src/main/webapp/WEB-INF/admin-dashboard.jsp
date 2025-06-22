@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*, model.Utente, model.Prodotto, model.Ordine" %>
+<%@ page import="java.util.*, model.utente.Utente, model.prodotto.Prodotto, model.ordine.Ordine" %>
 <%
   List<Utente> utenti = (List<Utente>) request.getAttribute("utenti");
   List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
@@ -46,7 +46,7 @@
       <%
         }
       %>
-      <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
+      <a href="<%= request.getContextPath() %>/RedirectCarrelloServlet">
         <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
       </a>
       <%
@@ -60,7 +60,7 @@
       <%
       } else {
       %>
-      <a href="<%= request.getContextPath() %>/login.jsp">
+      <a href="<%= request.getContextPath() %>/RedirectLoginServlet">
         <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
       </a>
       <%

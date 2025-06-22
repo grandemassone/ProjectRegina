@@ -1,4 +1,6 @@
-package model;
+package model.utente;
+
+import model.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;

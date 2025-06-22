@@ -1,4 +1,4 @@
-<%@ page import="model.Utente" %>
+<%@ page import="model.utente.Utente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="it">
 <head>
@@ -20,6 +20,7 @@
     if (loginMessage != null) {
 %>
 <script type="text/javascript">
+    //replace serve ad evitare errori di sintassi contenute nel messaggio che si trova in RegisterServlet
     alert("<%= loginMessage.replace("\"", "\\\"") %>");
 </script>
 <%
@@ -57,7 +58,7 @@
             <%
                 }
             %>
-            <a href="<%= request.getContextPath() %>/pagina-carrello.jsp">
+            <a href="<%= request.getContextPath() %>/RedirectCarrelloServlet">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
             <%
@@ -71,7 +72,7 @@
             <%
             } else {
             %>
-            <a href="<%= request.getContextPath() %>/login.jsp">
+            <a href="<%= request.getContextPath() %>/RedirectLoginServlet">
                 <button class="button" type="button"><i class="fas fa-sign-in"></i></button>
             </a>
             <%

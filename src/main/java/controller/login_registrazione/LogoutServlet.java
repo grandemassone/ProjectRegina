@@ -1,4 +1,4 @@
-package controller;
+package controller.login_registrazione;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

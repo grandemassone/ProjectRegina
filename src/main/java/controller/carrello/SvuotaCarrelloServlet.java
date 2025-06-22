@@ -1,4 +1,4 @@
-package controller;
+package controller.carrello;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -16,7 +16,7 @@ public class SvuotaCarrelloServlet extends HttpServlet {
         if (session != null) {
             session.removeAttribute("carrello");
         }
-        response.sendRedirect(request.getContextPath() + "/pagina-carrello.jsp");
+        response.sendRedirect(request.getContextPath() + "/WEB-INF/pagina-carrello.jsp");
     }
 
     @Override

@@ -1,4 +1,6 @@
-package model;
+package model.ordine;
+
+import model.prodotto.Prodotto;
 
 import java.sql.Timestamp;
 import java.util.HashMap;

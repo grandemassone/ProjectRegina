@@ -1,13 +1,13 @@
-package controller;
+package controller.admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Prodotto;
-import model.ProdottoDAO;
-import model.Utente;
+import model.prodotto.Prodotto;
+import model.prodotto.ProdottoDAO;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,13 +17,6 @@ public class AggiornaQuantitaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Utente u = (Utente) request.getSession().getAttribute("utente");
-        if (u == null || !"admin".equals(u.getRuolo())) {
-            response.sendRedirect(request.getContextPath() + "/accesso-negato.jsp");
-            return;
-        }
-
         try {
             List<Prodotto> prodotti = ProdottoDAO.doRetrieveQuantita();
             for (Prodotto p : prodotti) {

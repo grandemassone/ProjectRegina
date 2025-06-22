@@ -1,4 +1,6 @@
-package model;
+package model.prodotto;
+
+import model.ConPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

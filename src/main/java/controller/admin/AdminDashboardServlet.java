@@ -1,14 +1,12 @@
-package controller;
+package controller.admin;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Prodotto;
-import model.ProdottoDAO;
-import model.Utente;
-import model.UtenteDAO;
-import model.Ordine;
-import model.OrdineDAO;
+import model.prodotto.Prodotto;
+import model.prodotto.ProdottoDAO;
+import model.utente.Utente;
+import model.utente.UtenteDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,7 +20,7 @@ public class AdminDashboardServlet extends HttpServlet {
 
         Utente u = (Utente) request.getSession().getAttribute("utente");
         if(u == null || !"admin".equals(u.getRuolo())) {
-            response.sendRedirect(request.getContextPath() + "/accesso-negato.jsp");
+            response.sendRedirect(request.getContextPath() + "/WEB-INF/accesso-negato.jsp");
             return;
         }
 

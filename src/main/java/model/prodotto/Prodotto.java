@@ -1,4 +1,4 @@
-package model;
+package model.prodotto;
 
 public class Prodotto {
     private int idProdotto;

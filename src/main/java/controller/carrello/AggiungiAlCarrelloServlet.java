@@ -1,10 +1,10 @@
-package controller;
+package controller.carrello;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Prodotto;
-import model.ProdottoDAO;
+import model.prodotto.Prodotto;
+import model.prodotto.ProdottoDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
             //Non succede mai perché facciamo già il controllo in JavaScript
             if (prodotto == null || prodotto.getQuantita() < quantita) {
                 request.setAttribute("error", "Prodotto non disponibile o quantità richiesta troppo alta.");
-                request.getRequestDispatcher("/pagina-carrello.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/pagina-carrello.jsp").forward(request, response);
                 return;
             }
 

@@ -1,12 +1,12 @@
-package controller;
+package controller.carrello;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Prodotto;
-import model.Utente;
-import model.UtenteDAO;
-import model.OrdineDAO;
+import model.prodotto.Prodotto;
+import model.utente.Utente;
+import model.utente.UtenteDAO;
+import model.ordine.OrdineDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ public class ConfermaOrdineServlet extends HttpServlet {
                 if (nome == null || cognome == null || email == null ||
                         nome.isEmpty() || cognome.isEmpty() || email.isEmpty()) {
                     request.setAttribute("errore", "Tutti i campi utente sono obbligatori.");
-                    request.getRequestDispatcher("/form-spedizione.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/form-spedizione.jsp").forward(request, response);
                     return;
                 }
 
@@ -58,14 +58,14 @@ public class ConfermaOrdineServlet extends HttpServlet {
             if (indirizzo == null || citta == null || cap == null ||
                     indirizzo.isEmpty() || citta.isEmpty() || cap.isEmpty()) {
                 request.setAttribute("errore", "Tutti i campi di spedizione sono obbligatori.");
-                request.getRequestDispatcher("/form-spedizione.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/form-spedizione.jsp").forward(request, response);
                 return;
             }
 
             Map<Prodotto, Integer> carrello = (Map<Prodotto, Integer>) session.getAttribute("carrello");
             if (carrello == null || carrello.isEmpty()) {
                 request.setAttribute("errore", "Il carrello è vuoto.");
-                request.getRequestDispatcher("/pagina-carrello.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/pagina-carrello.jsp").forward(request, response);
                 return;
             }
 

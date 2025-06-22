@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.Utente" %>
+<%@ page import="model.utente.Utente" %>
 <html>
 <head>
     <meta charset="UTF-8">

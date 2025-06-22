@@ -1,4 +1,4 @@
-package controller;
+package controller.login_registrazione;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

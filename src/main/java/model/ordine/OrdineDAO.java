@@ -1,8 +1,10 @@
-package model;
+package model.ordine;
+
+import model.ConPool;
+import model.prodotto.Prodotto;
+import model.utente.Utente;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class OrdineDAO {

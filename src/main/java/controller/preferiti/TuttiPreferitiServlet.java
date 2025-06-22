@@ -1,11 +1,15 @@
-package controller;
+package controller.preferiti;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import model.Prodotto;
-import model.ProdottoDAO;
-import model.Utente;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.prodotto.Prodotto;
+import model.prodotto.ProdottoDAO;
+import model.utente.Utente;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,12 +24,13 @@ public class TuttiPreferitiServlet extends HttpServlet {
 
         // Controllo login
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("utente") == null) {
+        if(session == null || session.getAttribute("utente") == null) {
             // Creo (o riutilizzo) la session per passare il messaggio
             session = request.getSession(true);
             session.setAttribute("loginMessage",
                     "Devi prima effettuare il login per vedere i preferiti!");
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+            dispatcher.forward(request, response);
             return;
         }
 
@@ -36,7 +41,7 @@ public class TuttiPreferitiServlet extends HttpServlet {
         List<Prodotto> preferiti;
         try {
             preferiti = dao.doRetrieveAllPreferiti(idUtente);
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             throw new ServletException("Errore nel recupero dei preferiti", e);
         }
 

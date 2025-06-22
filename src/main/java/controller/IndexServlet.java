@@ -3,10 +3,9 @@ package controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Prodotto;
-import model.ProdottoDAO;
+import model.prodotto.Prodotto;
+import model.prodotto.ProdottoDAO;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})

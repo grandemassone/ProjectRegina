@@ -1,10 +1,10 @@
-package controller;
+package controller.preferiti;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.ProdottoDAO;
-import model.Utente;
+import model.prodotto.ProdottoDAO;
+import model.utente.Utente;
 
 import java.io.IOException;
 import java.sql.SQLException;

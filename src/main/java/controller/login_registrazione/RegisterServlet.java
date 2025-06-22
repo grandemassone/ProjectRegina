@@ -1,10 +1,10 @@
-package controller;
+package controller.login_registrazione;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import model.Utente;
-import model.UtenteDAO;
+import model.utente.Utente;
+import model.utente.UtenteDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ public class RegisterServlet extends HttpServlet {
                 nome.isBlank() || cognome.isBlank() || email.isBlank() || password.isBlank()) {
 
             request.setAttribute("error", "Tutti i campi sono obbligatori.");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
 
@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
             // Controlla se l'email è già registrata
             if (UtenteDAO.doRetrieveByEmail(email) != null) {
                 request.setAttribute("error", "Email già registrata.");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
                 return;
             }
 
@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
             // Mostra messaggio di successo e reindirizza al login
             HttpSession session = request.getSession();
             session.setAttribute("loginMessage", "Registrazione completata con successo. Effettua il login.");
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 
         } catch (SQLException e) {
             throw new ServletException("Errore durante la registrazione", e);
