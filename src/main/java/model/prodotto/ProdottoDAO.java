@@ -68,37 +68,6 @@ public class ProdottoDAO {
         return prodotto;  //Ritorna l'oggetto Prodotto (può essere null se non trovato)
     }
 
-    public boolean isInPreferiti(int idUtente, int idProdotto) throws SQLException {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM preferiti WHERE id_utente = ? AND id_prodotto = ?");
-            ps.setInt(1, idUtente);
-            ps.setInt(2, idProdotto);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-        }
-    }
-
-    public void aggiungiAPreferiti(int idUtente, int idProdotto) throws SQLException {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO preferiti (id_utente, id_prodotto) VALUES (?, ?)");
-            ps.setInt(1, idUtente);
-            ps.setInt(2, idProdotto);
-            ps.executeUpdate();
-        }
-    }
-
-    public void rimuoviDaPreferiti(int idUtente, int idProdotto) throws SQLException {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM preferiti WHERE id_utente = ? AND id_prodotto = ?");
-            ps.setInt(1, idUtente);
-            ps.setInt(2, idProdotto);
-            ps.executeUpdate();
-        }
-    }
-
     public List<Prodotto> doRetrieveAllPreferiti(int idUtente) throws SQLException {
         List<Prodotto> prodotti = new ArrayList<>();
 

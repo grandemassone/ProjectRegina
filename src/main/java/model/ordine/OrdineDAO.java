@@ -42,7 +42,8 @@ public class OrdineDAO {
             con.setAutoCommit(false);
 
             PreparedStatement insertDettaglio = con.prepareStatement(
-                    "INSERT INTO ordine_dettaglio (idOrdine, idProdotto, quantita, prezzo_unitario) VALUES (?, ?, ?, ?)"
+                    "INSERT INTO ordine_dettaglio (idOrdine, idProdotto, quantita, prezzo_unitario, nome_prodotto, descrizione_prodotto) " +
+                            "VALUES (?, ?, ?, ?, ?, ?)"
             );
 
             PreparedStatement updateQuantita = con.prepareStatement(
@@ -57,6 +58,8 @@ public class OrdineDAO {
                 insertDettaglio.setInt(2, p.getId());
                 insertDettaglio.setInt(3, q);
                 insertDettaglio.setDouble(4, p.getPrezzo());
+                insertDettaglio.setString(5, p.getNome());
+                insertDettaglio.setString(6, p.getDescrizione());
                 insertDettaglio.addBatch();
 
                 updateQuantita.setInt(1, q);
