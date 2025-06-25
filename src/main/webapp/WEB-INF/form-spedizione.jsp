@@ -34,7 +34,7 @@
         <div class="sezioneBottoni destra">
             <%
                 Utente utente = (Utente) session.getAttribute("utente");
-                if (utente != null && "admin".equals(utente.getRuolo())) {
+                if(utente != null && "admin".equals(utente.getRuolo())) {
             %>
             <a href="<%= request.getContextPath() %>/AdminDashboardServlet">
                 <button class="button" type="button" title="Pannello Admin">
@@ -45,7 +45,7 @@
             <a href="<%= request.getContextPath() %>/RedirectCarrelloServlet">
                 <button class="button" type="button"><i class="fas fa-shopping-cart"></i></button>
             </a>
-            <% if (utente != null) { %>
+            <% if(utente != null) { %>
             <form action="<%= request.getContextPath() %>/LogoutServlet" method="post" style="display:inline">
                 <button class="button" type="submit" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
             </form>
@@ -67,7 +67,7 @@
 
 <h2>Conferma Ordine</h2>
 <form action="ConfermaOrdineServlet" method="post">
-    <% if (u == null) { %>
+    <% if(u == null) { %>
     <h3>Dati Utente</h3>
     Nome: <input type="text" name="nome" required><br><br>
     Cognome: <input type="text" name="cognome" required><br><br>
@@ -130,51 +130,56 @@
 
 <!-- AJAX REGIONI E PROVINCE -->
 <script>
-    // Attende che il DOM sia completamente caricato prima di eseguire il codice
+    // Aspetta il caricamento completo del documento
     document.addEventListener("DOMContentLoaded", function () {
-
-        // Seleziona i due menu a tendina dal DOM: uno per la regione, uno per la provincia
+        // Ottiene i riferimenti ai due menu a tendina (select) per regione e provincia
         const regioneSelect = document.getElementById("regione");
         const provinciaSelect = document.getElementById("provincia");
 
-        // Carica il file JSON contenente l'associazione tra regioni e province
-        fetch("<%= request.getContextPath() %>/resources/regioni-province.json")
-            .then(response => response.json()) // Converte la risposta in formato JSON
-            .then(data => {
-                // Popola il select delle regioni con le chiavi del JSON (nomi delle regioni)
-                for (let regione in data) {
-                    const option = document.createElement("option");
-                    option.value = regione;
-                    option.textContent = regione;
-                    regioneSelect.appendChild(option);
-                }
+        // Crea una nuova richiesta HTTP asincrona per ottenere il file JSON
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "<%= request.getContextPath() %>/resources/regioni-province.json", true);
 
-                // Aggiunge un listener per quando l'utente cambia regione
-                regioneSelect.addEventListener("change", () => {
-                    // Ottiene la regione selezionata
-                    const selectedRegione = regioneSelect.value;
+        // Definisce cosa fare quando la risposta alla richiesta arriva
+        xhr.onload = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Converte il testo JSON ricevuto in un oggetto JavaScript
+                    const data = JSON.parse(xhr.responseText);
 
-                    // Recupera le province associate alla regione selezionata
-                    const province = data[selectedRegione] || [];
-
-                    // Svuota il select delle province e inserisce una prima opzione vuota
-                    provinciaSelect.innerHTML = '<option value="">Seleziona provincia</option>';
-
-                    // Aggiunge le nuove opzioni per le province associate alla regione selezionata
-                    province.forEach(prov => {
+                    for (let regione in data) {
+                        // Crea una nuova <option> per il menu delle regioni
                         const opt = document.createElement("option");
-                        opt.value = prov;
-                        opt.textContent = prov;
-                        provinciaSelect.appendChild(opt);
-                    });
-                });
-            })
-            .catch(error => {
-                // Gestione degli errori di caricamento del file JSON
-                console.error("Errore nel caricamento delle province:", error);
-            });
+                        opt.value = regione;           // valore option
+                        opt.textContent = regione;     // testo select
+                        regioneSelect.appendChild(opt); // aggiunge l'opzione al menu
+                    }
+
+                    // Quando l'utente seleziona una regione dal menu
+                    regioneSelect.onchange = function () {
+                        // Ottiene l'elenco delle province data la regione
+                        const province = data[regioneSelect.value] || [];
+
+                        // Reimposta il menu delle province con l'opzione iniziale
+                        provinciaSelect.innerHTML = '<option value="">Seleziona provincia</option>';
+
+                        // Aggiunge ogni provincia come <option> nel menu delle province
+                        province.forEach(p => {
+                            const opt = document.createElement("option");
+                            opt.value = p;
+                            opt.textContent = p;
+                            provinciaSelect.appendChild(opt);
+                        });
+                    };
+                } else {
+                    // In caso di errore nella risposta (es. file non trovato)
+                    console.error("Errore nella richiesta:", xhr.statusText);
+                }
+            }
+        };
+        // Invia la richiesta
+        xhr.send();
     });
 </script>
-
 </body>
 </html>
