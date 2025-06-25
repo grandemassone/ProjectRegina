@@ -110,6 +110,7 @@ hr {
     /* Mantiene l'aspetto corretto */
     border-radius: 12px;
 }
+
 /*Contenitore tipologia (tutti-prodotti)*/
 #contenitoreTipologia {
     display: flex;
@@ -120,7 +121,7 @@ hr {
 /*Filtro tipologia (tutti-prodotti)*/
 #filtroTipologia {
     background-color: white; /* Sfondo bianco */
-    color: rgb(58, 32, 27);;          /* Verde scuro pieno */
+    color: rgb(58, 32, 27);; /* Verde scuro pieno */
     padding: 6px 10px;
     border-radius: 6px;
     font-family: 'Cal Sans', sans-serif;
@@ -137,7 +138,7 @@ hr {
     justify-content: center; /* Centra i prodotti */
     gap: 20px; /* Spaziatura tra i prodotti */
     margin-top: 50px;
-    flex-wrap: wrap;  /* Permette ai prodotti di andare a capo quando lo spazio è insufficiente */
+    flex-wrap: wrap; /* Permette ai prodotti di andare a capo quando lo spazio è insufficiente */
 }
 
 /* Prodotti */

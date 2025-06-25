@@ -20,7 +20,7 @@
     if (loginMessage != null) {
 %>
 <script type="text/javascript">
-    //replace serve ad evitare errori di sintassi contenute nel messaggio che si trova in RegisterServlet
+    //replace serve a evitare errori di sintassi contenute nel messaggio che si trova in RegisterServlet
     alert("<%= loginMessage.replace("\"", "\\\"") %>");
 </script>
 <%
