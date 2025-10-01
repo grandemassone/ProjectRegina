@@ -1,51 +1,55 @@
-# Regina Chocolate 🍫
+# 🍫 Regina Chocolate
 
-Sito web dedicato alla promozione del cioccolato artigianale
+A web application dedicated to promoting artisanal chocolate, developed as a university project.
 
-## Tecnologie
-- Architettura MVC (Model-View-Controller)
-- Java con Servlet e JSP (Jakarta EE)
-- HTML5 & CSS3
-- Responsive Design con Flexbox e Media Query
-- JavaScript (no jQuery)
-- AJAX con formato JSON
-- MySQL per la gestione dei dati
-- HTTPS con configurazione keystore su Tomcat
-- Expression Language (EL) nelle JSP
-- Password cifrate nel database
-- Validazione form lato client e server
+---
 
-## Funzionalità
+## 🚀 Technologies
+- **MVC architecture (Model-View-Controller)**
+- **Java** with Servlet and JSP (Jakarta EE)
+- **HTML5 & CSS3** (Responsive design with Flexbox and Media Query)
+- **JavaScript** (no jQuery)
+- **AJAX** with JSON data exchange
+- **MySQL** for database management
+- **HTTPS** with keystore configuration on Tomcat
+- **Expression Language (EL)** in JSP
+- **Encrypted passwords** stored in the database
+- **Form validation** on both client and server sides
 
-👤 Gestione Utente
-- Registrazione
-- Login con cifratura e gestione ruoli (Guest / Utente / Admin)
+---
 
-🛒 Carrello e Ordini
-- Aggiunta e rimozione prodotti dal carrello
-- Salvataggio carrello in sessione
-- Conferma ordine e pagamento
+## 🔑 Features
 
-❤️ Preferiti
-- Aggiunta / rimozione prodotti tra i preferiti
-- Visualizzazione di tutti i prodotti preferiti da utente loggato
+### 👤 User Management
+- User registration
+- Login with password encryption
+- Role management: Guest / User / Admin
 
-🛠️ Pannello Admin
-- Gestione quantità prodotti
-- Visualizzazione utenti registrati
+### 🛒 Cart & Orders
+- Add and remove products from cart
+- Cart persistence in session
+- Order confirmation and checkout process
 
-🧭 Navigazione e UI
-- Layout responsive per dispositivi mobili
-- Scroll fluido e animazioni leggere
-- Galleria prodotti con effetto hover
-- Menu di navigazione dinamico
-- Footer con contatti e icone social
+### ❤️ Favorites
+- Add/remove products to/from favorites
+- View all favorites for logged-in users
 
-📦 Integrazione AJAX
-Selezione province e comuni in fase di ordine con chiamate JSON asincrone
+### 🛠️ Admin Panel
+- Manage product quantities
+- View registered users
 
-## Autori
+### 🧭 Navigation & UI
+- Responsive layout for mobile devices
+- Smooth scrolling and light animations
+- Product gallery with hover effects
+- Dynamic navigation menu
+- Footer with contacts and social icons
 
-Salvador Davide Passarelli
+### 📦 AJAX Integration
+- Province and municipality selection during checkout via asynchronous JSON calls
 
-Salvatore Lepore
+---
+
+## 👥 Authors
+- **Salvador Davide Passarelli**  
+- **Salvatore Lepore**
