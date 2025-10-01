@@ -16,7 +16,7 @@ public class SvuotaCarrelloServlet extends HttpServlet {
         if (session != null) {
             session.removeAttribute("carrello");
         }
-        response.sendRedirect(request.getContextPath() + "/WEB-INF/pagina-carrello.jsp");
+        response.sendRedirect(request.getContextPath() + "/RedirectCarrelloServlet");
     }
 
     @Override
