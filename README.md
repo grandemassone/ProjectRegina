@@ -46,6 +46,6 @@ Selezione province e comuni in fase di ordine con chiamate JSON asincrone
 
 ## Autori
 
-Salvatore Lepore    
-
 Salvador Davide Passarelli
+
+Salvatore Lepore
